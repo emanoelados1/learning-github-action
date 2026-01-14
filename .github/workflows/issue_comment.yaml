@@ -9,8 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - name: "dump github context"
-          run: |
-            cat <<'EOF' | jq
-            ${{ toJSON(github.event) }}
-            EOF
+          env:
+            EVENT_JSON: ${{ toJSON(github.event) }}
+          run: echo "$EVENT_JSON" | jq .
           shell: bash
