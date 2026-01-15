@@ -16,3 +16,18 @@ jobs:
             EVENT_JSON: ${{ toJSON(github.event) }}
           run: echo "$EVENT_JSON" | jq .
           shell: bash
+  comment-with-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create a comment with api
+        run: |
+          gh api -X post \
+          http://api.github.com/repo/${ORGANIZATION}/${REPOSITORY}/issues/${ISSUES_NUMBER/comments } \
+          -f body='
+          Comment but from the API call not action
+          ' 
+        env: 
+          GIT_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+          ORGANIZATION: ${{github.event.oganization.login}}
+          REPOSITORY: ${{github.event.repository.name}}
+          ISSUES_NUMBER: ${{ github.event.issue.number}}
