@@ -8,6 +8,8 @@ on:
 jobs:
   comment-with-actions:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
     - name: "dump github context"
       run: echo '${{ toJSON(github.event) }}' jq .
